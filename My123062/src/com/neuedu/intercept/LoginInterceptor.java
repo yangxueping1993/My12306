@@ -6,5 +6,5 @@ package com.neuedu.intercept;
  * 2017年11月10日
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter   {
-
+	System.out.println("haah");
 }
