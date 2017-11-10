@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>注册信息</title>
+ <link href="css/css.css" rel="stylesheet" type="text/css">
+
+ <script src="js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+<!-- ###########   验证-->
+<script type="text/javascript">
+
+//注册时，验证登录名是否已经存在
+function processRequest(async){
+	$("#loginNameTip").text("");
+	var loginName=$("input[name='loginName']:first").val();
+	console.log(loginName);
+	 var flag=false;
+	/* $.post("doRegister?action=check",{loginName:loginName},function(resp,status,xhr){
+		console.log("resp=="+resp);
+		if(resp=="exists"){
+   			$("#loginNameTip").text("登录名已存在！",'red');
+		}
+	}); */
+	$.ajax({
+			url:"doRegister?action=check",
+			type:"post",
+			async:async,
+			data:{loginName:loginName},
+			success:function(resp,status,xhr){
+				if(resp=="exists"){
+		   			$("#loginNameTip").text("登录名已存在！",'red');
+				}else{
+					flag=true;
+				}
+				return flag;
+			},
+			error:function(resp,status,xhr){
+				alert("注册失败，请稍后重试");
+			}
+	});
+}
+
+$(function(){
+	function validateForm(){
+	      $(".alarm").text('');
+	      obj=$("form:first")[0];
+	      var flag=true;
+	      
+	 	var loginName=$(":input[name=loginName]").val();
+	    if(/^\w{6,30}$/.test(loginName)==false){
+	    			$("#loginNameTip").text("用户名格式输入有误！",'red');
+	    	      	flag=false;
+	     }
+	    if(processRequest(false)==false){
+			flag=false;
+		}
+	      
+	      var pwd=$(":input[name=pwd]").val();
+	      if(pwd==""){
+	      	$("#pwdTip").text("密码不能为空");
+	      	flag=false;
+	      }
+	      
+	      var pwd2=$(":input[name=pwd2]").val();
+	      if(pwd2==""){
+	      	$("#pwd2Tip").text("确认密码不能为空");
+	      	flag=false;
+	      }
+	      
+	    /*   var realName=$(":input[name=realName]").val();
+	      if(realName==""){
+	      	$("#realNameTip").text("真实姓名不能为空");
+	        flag=false;
+	      } */
+	      
+	     /*  var citySel=$(":input[name=city]").val();
+			console.log(citySel);
+			if(citySel=="城市"){
+				$("#cityTip").text("户籍不可为空！");
+				flag=false;
+			} */
+					
+	      var idCode=$(":input[name=idCode]").val();
+			if(idCode==""){
+					$("#idCodeTip").text("证件号码不可为空");
+					flag=false;
+			}/* else if/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(idCode)==false){
+					$("#idCodeTip").text("证件号码输入有误");
+					flag=false; 
+			}   */
+			
+			var birthday=$(":input[name=birthday]").val();
+		    if(birthday==""){
+		      	$("#birthdayTip").text("出生日期不能为空");
+		      	flag=false;
+		    }  
+		    
+		  /*   var peopleCnt=$(":checked[name=people]").length;
+			if(peopleCnt==0){
+				$("#peopleTip").text("旅客类型不可为空！");
+				flag=false;
+			} */
+			
+			if(flag){
+				$.ajax({
+					url:"doRegister",
+					type:"post",
+					data:$("#form1").serialize(),
+					success:function(resp,status,xhr){
+						console.log(resp);
+						if(resp=="error"){
+							alert("注册失败，请稍后重试");
+						}else{
+							/* var loginName=$("#loginName").val(); */
+							console.log(loginName);
+							window.location.href="Login.jsp?loginNameLN="+loginName;
+						}
+					},
+					error:function(resp,status,xhr){
+						alert("注册失败，请稍后重试");
+					}
+				});
+			}
+		}	
+	$('#submit_bt').click(function(){
+		validateForm();
+	});
+	$('#reset_bt').click(function(){
+		console.log("zhixinf");
+		document.forms[0].reset();
+	});
+});
+</script>
+</head>
+<body  leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+	<form id="form1" action="doRegister"  method="post"  >
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >
+			<tr>
+				<td colspan="2" background="images/ny_top_img_bg.gif"><img
+					src="images/ny_top_img.gif" width="650" height="108"></td>
+			</tr>
+			<tr>
+				<td width="75" height="23" bgcolor="#deedf8">&nbsp;</td>
+				<td width="958" align="left" bgcolor="#deedf8" class="text_cray1">当前位置:注册信息
+				</td>
+			</tr>
+		</table>
+		<table width="100%" border="0" align="center" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td background="images/bg_point_write.gif">
+				<table width="835" border="0" align="center" cellpadding="0" cellspacing="0">
+						<tr>
+							<td height="30" colspan="2" align="center">&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="41" height="7" align="center">&nbsp;</td>
+							<td width="794" height="30" align="left" valign="top"><span
+								class="text_blod_title">注册信息</span></td>
+						</tr>
+						<tr>
+							<td height="15" colspan="2" align="center"><img
+								src="images/line1.jpg" width="835" height="6"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><table width="100%" border="0"
+									cellspacing="0" cellpadding="0">
+									<tr>
+										<td width="5%">&nbsp;</td>
+										<td width="95%" align="left" class="text_cray">注：标有 <span
+											class="text_red">*</span> 处，均为必填项
+										</td>
+									</tr>
+									<tr>
+										<td height="15" colspan="2">&nbsp;</td>
+									</tr>
+
+								</table>
+								<table width="700" border="0" align="center" cellpadding="0"
+									cellspacing="0">
+									<tr>
+										<td height="30" colspan="5" align="left" class="text_red1"><span
+											class="text_title">登录信息</span></td>
+									</tr>
+
+									<tr>
+										<td width="19" align="center" class="text_red">*</td>
+										<td width="98" height="40" align="left" class="text_cray1">登录名：</td>
+										<td width="160" align="left" class="text_cray1">
+										<input name="loginName" type="text" class="text_cray" id="loginName" 
+										 onblur="processRequest(true);"/></td>
+										<td width="423" height="35" align="left" class="text_cray">
+										由字母、数字或“_”组成，长度不少于6位，不多于30位
+										<span  id="loginNameTip"  class="alarm"  style="color: red; font-size: 13px;"  ></span>
+										</td>
+										
+									</tr>
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">密码：</td>
+										<td align="left" class="text_cray1">
+										<input name="pwd" type="text" class="text_cray" id="textfield3" /></td>
+										<td height="35" align="left" class="text_cray">不少于6位字符
+										<span  id="pwdTip"  class="alarm"  style="color: red; font-size: 13px;"  ></span>
+										</td>
+										
+									</tr>
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">确认密码：</td>
+										<!-- <td width="19" align="center" id="pwdTip"></td> -->
+										<td align="left" class="text_cray1">
+										<input name="pwd2" type="password" class="text_cray" id="textfield4" /></td>
+										<td height="35" align="left" class="text_cray">请再次输入密码
+										<span  id="pwd2Tip"  class="alarm"  style="color: red; font-size: 13px;" ></span>
+										</td>
+										
+									</tr>
+								</table>
+								<table width="700" border="0" align="center" cellpadding="0"
+									cellspacing="0">
+									<tr>
+										<td height="35" colspan="5" align="left" class="text_red1"><span
+											class="text_title">详细信息</span></td>
+									</tr>
+
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">真实姓名：</td>
+										<td height="35" colspan="3" align="left">
+										<input name="realName" type="text" class="text_cray" id="textfield2" />
+										<span  id="realNameTip"  class="alarm"  style="color: red; font-size: 13px;"  ></span>
+										</td>
+										
+									</tr>
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">性
+											别：</td>
+										<td height="35" colspan="3" align="left" class="text_cray1">
+											<span class="mr25"> <input type="radio"
+												name="sexCode" value="M" checked="checked" />
+										</span> <span class="text_cray"> <label>男</label> <input
+												type="radio" name="sexCode" value="F" /> <label>女</label>
+										</span> <label></label> <span><label></label> </span>
+										<span  id="sexTip"  class="alarm"  style="color: red; font-size: 13px;"  ></span>
+										</td>
+										
+									</tr>
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">省份：</td>
+										<td width="104" height="35" align="left"><label>
+												<select name="province" class="text_cray" id="province">
+													<option value="省份" selected="selected">省份</option>
+											</select>
+										</label></td>
+										<td width="43" height="35" align="left" class="text_cray">城市：</td>
+										<td width="436" height="35" align="left" class="text_cray"><label>
+												<select name="city" class="text_cray" id="city">
+													<option value="城市" selected="selected">市县</option>
+											</select>
+										</label>
+										<span  id="cityTip"  class="alarm"  style="color: red; font-size: 13px;"  ></span>
+										</td>
+										
+									</tr>
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">证件类型：</td>
+										<td height="35" colspan="3" align="left">
+										<select	class="text_cray" name="idTypeCode"	id="cardType">
+												<option value="1"><span>二代身份证</span>
+												</option>
+												<option value="2"><span>港澳通行证</span>
+												</option>
+												<option value="3"><span>台湾通行证</span>
+												</option>
+												<option value="4"><span>护照</span>
+												</option>
+										</select></td>
+										
+										
+									</tr>
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">证件号码：</td>
+										<td height="35" colspan="3" align="left">
+										<input name="idCode" type="text" class="text_cray" id="textfield6" />
+										<span  id="idCodeTip"  class="alarm"  style="color: red; font-size: 13px;" ></span>
+										</td>
+										
+									</tr>
+									<tr>
+										<td width="19" align="center" class="text_red1"><span
+											class="text_red">*</span></td>
+										<td width="98" height="40" align="left" class="text_cray1">出生日期：</td>
+										<td height="35" colspan="3" align="left">
+										<input name="birthday" type="text" class="text_cray" id="textfield7" />
+										<span  id="birthdayTip"  class="alarm"  style="color: red; font-size: 13px;" ></span>
+										</td>
+									</tr>
+
+									<tr>
+										<td width="19" align="center">&nbsp;</td>
+										<td width="98" height="40" align="left" class="text_cray1">旅客类型：</td>
+										<td height="35" colspan="3" align="left"><select
+											class="text_cray" id="passengerType" name="passenger_type"><option
+													value="1">成人</option>
+												<option value="2">儿童</option>
+												<option value="3">学生</option>
+												<option value="4">残疾军人、伤残人民警察</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td height="10" colspan="5" align="center"></td>
+									</tr>
+									
+									<tr>
+										<td width="19" align="center">&nbsp;</td>
+										<td width="98" height="40" align="left" class="text_cray1">旅客类型222：</td>
+										<td height="35" colspan="3" align="left">
+										<input type="checkbox" name="people"  value="儿童"/>儿童
+										<input type="checkbox" name="people"  value="青少年"/>青少年
+										<input type="checkbox" name="people"  value="成年"/>成年
+										<span  id="peopleTip"  class="alarm"  style="color: red; font-size: 13px;" ></span>
+									</tr>
+									<tr>
+										<td height="10" colspan="5" align="center"></td>
+									</tr>
+
+									<tr>
+										<td width="19" align="center">&nbsp;</td>
+										<td width="98" height="30" align="left" class="text_cray1">备注：</td>
+										<td colspan="3" align="left" height="80"><textarea
+												name="reamrk" rows="8" class="text_cray"
+												style="width: 100%"></textarea></td>
+									</tr>
+
+
+
+									<tr>
+										<td align="center">&nbsp;</td>
+										<td height="30" align="left" class="text_cray1"></td>
+										<td height="50" colspan="3" align="left" valign="middle"
+											class="text_cray1"><input type="checkbox" class="check"
+											id="checkAgree" /> 我已阅读并同意遵守 <a
+											href="/otn/regist/rule;jsessionid=FA97B306AACF75E37DD4D10CFD59994A"
+											class="ft14" target="_blank" shape="rect">
+												《中国铁路客户服务中心网站服务条款》</a></td>
+									</tr>
+									
+									
+<!--  ##########################                按钮 -->
+								</table> <br>
+								<table width="835" border="0" align="center" cellpadding="0"
+									cellspacing="0">
+									<tr>
+										<td width="234">&nbsp;</td>
+										<td width="147" height="30" align="center">
+										<input name="button3" type="button" class="buttj" id="submit_bt"  value=""  >
+										</td>
+										<td width="141" align="center">&nbsp;</td>
+										<td width="147" align="center">
+										<input name="button4"  type="button" class="butcz" id="reset_bt"  value="">
+										</td>
+										<td width="166" align="center">&nbsp;</td>
+									</tr>
+								</table>
+								
+								</td>
+						</tr>
+					</table></td>
+			</tr>
+		</table>
+		<br>
+
+		<table width="100%" border="0" cellspacing="0">
+			<tr>
+				<td height="2" background="images/bottom_point.gif"></td>
+			</tr>
+			<tr>
+				<td height="25" align="center" background="images/bottom_ny_bg.gif"
+					class="text_cray">copyright@12306 购票网</td>
+			</tr>
+		</table>
+	</form>
+	<script type="text/JavaScript" src="js/common.js"></script>
+</body>
+</html>
