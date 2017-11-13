@@ -77,18 +77,17 @@ public class LoginServlet extends HttpServlet {
 		User user=us.login(loginName, pwd);
 		
 		if(user!=null){
-			request.getSession().setAttribute(Constants.userKey, user);
-			
 			Integer ii=new Integer(++i);
 			map.put(-1,0);
 			ServletContext application=this.getServletContext();  
 			
-			
-			
 			application.setAttribute("app", map);
 			if(null!=((HashMap)application.getAttribute("app"))&&
 					((HashMap)application.getAttribute("app")).containsKey(user.getId())){
-				response.setContentType("text/html"); 
+				if(null!=((HttpSession)application.getAttribute(user.getId()+""))){
+					((HttpSession)application.getAttribute(user.getId()+"")).removeAttribute(Constants.userKey);
+				}
+				/*response.setContentType("text/html"); 
 				PrintWriter pw=response.getWriter(); 
 				pw.println("<html><body>");
 				pw.println("<script>");
@@ -99,11 +98,14 @@ public class LoginServlet extends HttpServlet {
 				pw.println("请求超时，请重新");
 				pw.flush();
 				pw.close();	
-				return;
+				return;*/			
+				
 			}else{
 				map.put(user.getId(),ii);
 			}
-			
+			HttpSession session=request.getSession();
+			session.setAttribute(Constants.userKey, user);
+			application.setAttribute(user.getId()+"", session);
 			//登录成功
 			/**
 			 * 登录成功后，把用户对象存放到session中

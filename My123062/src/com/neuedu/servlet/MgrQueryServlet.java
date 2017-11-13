@@ -101,10 +101,7 @@ public class MgrQueryServlet extends HttpServlet {
 		user.setCertType(certType);
 		user.setCert(idCode);
 		list=us.queryUser(user,bean);
-//		System.out.println("11="+ bean.getRecordCnt());
-//		System.out.println("2="+pageSize);
-//		System.out.println("3="+bean.getPageCnt());
-//		System.out.println("4="+curPage);
+		
 		Gson gson=new Gson();
 		Object[] obj=new Object[]{bean.getPageCnt(),list};
 		String str=gson.toJson(obj);
@@ -112,7 +109,7 @@ public class MgrQueryServlet extends HttpServlet {
 		PrintWriter pw=response.getWriter();
       	pw.print(str);
       	pw.flush();
-      	
+      	pw.close();
 		//req.setAttribute("userKK", list);
 		//把list存放到session中，以便于Excel导出
 /*		req.getSession().setAttribute("exportExcelUserList", list);
@@ -121,7 +118,7 @@ public class MgrQueryServlet extends HttpServlet {
 		req.setAttribute("curPage", curPage);
 		req.setAttribute("pageSize", pageSize);
 		req.setAttribute("pageUserParam", user);*/
-		pw.close();
+		
 	}
 
 	
@@ -315,9 +312,25 @@ public class MgrQueryServlet extends HttpServlet {
 	
 	public void doDelete(HttpServletRequest req, HttpServletResponse response)throws ServletException, IOException{
 		String[] dode=StringUtil.parseNullArray(req, "checkbox");
-		UserService us=UserService.getInstance();
-		us.delUser(dode);
-		req.getRequestDispatcher("/Admin/UserManageQuery.jsp").forward(req, response);
+		if(dode.length>0){
+			UserService us=UserService.getInstance();
+			/*req.getRequestDispatcher("/Admin/UserManageQuery.jsp").forward(req, response);*/
+			if(us.delUser(dode)>0){
+		      	PrintWriter pw=response.getWriter();
+		      	pw.print("success");
+		      	pw.flush();
+		      	pw.close();	
+			}
+		}else{
+			response.setContentType("text/html");
+	      	PrintWriter pw=response.getWriter();
+	      	pw.println("<html><title>删除失败</title><body>");
+	      	pw.println("<script>alert('请选择删除信息')</script>");
+	      	pw.println("<script>window.location='UserManageQuery.jsp';</script>");
+	      	pw.println("</body></html>");
+	      	pw.flush();
+	      	pw.close();	
+		}
 	}
 	
 	public void doPageQuery(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException{

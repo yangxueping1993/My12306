@@ -52,10 +52,27 @@ if(null!=request.getParameter("action")&&request.getParameter("action").equals("
 	 }
 	
 	function deleteMore(){
-		var form=$("#form1").get(0);
+		/* var form=$("#form1").get(0);
 		form.action="QueryServlet?action=delete";
 		form.method="post";
-		form.submit();
+		form.submit(); */
+		 $.ajax({
+		       url:"QueryServlet?action=delete",
+		       data:$('#form1').serialize(),
+		       type:"post",
+		       success:function(data){
+		    	   if(data=="success"){
+			    		window.location.reload();
+			    		window.location.href="UserManageQuery.jsp";
+			    		alert("恭喜你，删除成功");
+			    	}else{
+			    		alert("对不起，删除失败，请稍后重试！");
+			    	}
+		       },
+		       error:function(){
+		    	   alert("删除路子没走通");
+		       }
+		}); 
 	}
 	
 	 function queryAll(type){
