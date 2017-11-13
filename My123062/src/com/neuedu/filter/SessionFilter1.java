@@ -20,14 +20,14 @@ import com.neuedu.util.Constants;
  * Servlet Filter implementation class SessionFilter
  */
 @WebFilter("/SessionFilter")
-public class SessionFilter implements Filter {
+public class SessionFilter1 implements Filter {
 	
-	private String loginPath="";
+	private String loginPath=null;
 
     /**
      * Default constructor. 
      */
-    public SessionFilter() {
+    public SessionFilter1() {
     }
 
 	/**
@@ -43,36 +43,17 @@ public class SessionFilter implements Filter {
 		// place your code here
 		HttpServletRequest req=(HttpServletRequest)request;
 		HttpServletResponse resp=(HttpServletResponse)response;
-		String url=req.getRequestURI();
-//		session中存在用户信息，说明登录成功，则放行
-		if(req.getSession().getAttribute(Constants.userKey) != null){
+		/*if(req.getSession().getAttribute(Constants.userKey) != null){
 			// pass the request along the filter chain
-			if(((User)req.getSession().getAttribute(Constants.userKey)).getRule().equals("2")){
-				if(url.indexOf("Admin")!=-1){
-					resp.setContentType("text/html"); 
-					PrintWriter pw=resp.getWriter(); 
-					pw.println("<html><body>");
-					pw.println("<script>");
-					pw.println("alert('您的权限不足，不支持非法访问！')");
-					pw.println("window.top.location.href='"+req.getContextPath()+"/Login.jsp'");
-					pw.println("</script>");
-					pw.println("</body></html>");
-					pw.println("请求超时，请重新");
-					pw.flush();
-					pw.close();	
-					return;
-				}
-				chain.doFilter(request, response);
-			}
+//			session中存在用户信息，说明登录成功，则放行
 			chain.doFilter(request, response);
-			
 		}else{
+			String url=req.getRequestURI();
+			System.out.println("url=="+url);
+			System.out.println("loginPath=="+loginPath);
 			String[] pathArray=loginPath.split(";");
 			for(String path:pathArray){
-				if(null!=url&&url.endsWith("Login.jsp")){
-					chain.doFilter(request, response);
-					return;
-				}else if(null!=url&&url.indexOf(path)!=-1&&(!url.endsWith(".jsp"))){
+				if(null!=url&&url.indexOf(path)!=-1){
 					chain.doFilter(request, response);
 					return;
 				}
@@ -85,9 +66,29 @@ public class SessionFilter implements Filter {
 			pw.println("window.top.location.href='"+req.getContextPath()+"/Login.jsp'");
 			pw.println("</script>");
 			pw.println("</body></html>");
+			pw.println("请求超时，请重新");
 			pw.flush();
 			pw.close();
-			
+		}*/
+		String url=req.getRequestURI();
+		if(null!=req.getSession().getAttribute(Constants.userKey)&&
+		((User)req.getSession().getAttribute(Constants.userKey)).getRule().equals("2")){
+			if(url.indexOf("Admin")!=-1){
+				resp.setContentType("text/html"); 
+				PrintWriter pw=resp.getWriter(); 
+				pw.println("<html><body>");
+				pw.println("<script>");
+				pw.println("alert('您的权限不足，不支持非法访问！')");
+				pw.println("window.top.location.href='"+req.getContextPath()+"/Login.jsp'");
+				pw.println("</script>");
+				pw.println("</body></html>");
+				pw.println("请求超时，请重新");
+				pw.flush();
+				pw.close();	
+			}
+			chain.doFilter(request, response);	
+		}else{
+			chain.doFilter(request, response);
 		}
 	}
 

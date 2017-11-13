@@ -77,15 +77,17 @@ public class LoginServlet extends HttpServlet {
 		User user=us.login(loginName, pwd);
 		
 		if(user!=null){
+			
+			//如果用户已经登录，则将上一个登录用户挤下线
 			Integer ii=new Integer(++i);
 			map.put(-1,0);
 			ServletContext application=this.getServletContext();  
-			
 			application.setAttribute("app", map);
 			if(null!=((HashMap)application.getAttribute("app"))&&
 					((HashMap)application.getAttribute("app")).containsKey(user.getId())){
 				if(null!=((HttpSession)application.getAttribute(user.getId()+""))){
 					((HttpSession)application.getAttribute(user.getId()+"")).removeAttribute(Constants.userKey);
+				
 				}
 				/*response.setContentType("text/html"); 
 				PrintWriter pw=response.getWriter(); 
