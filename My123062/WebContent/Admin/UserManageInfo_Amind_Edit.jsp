@@ -72,7 +72,8 @@
 							<td width="20" align="center" class="text_red1"></td>
 							<td width="100" height="40" align="left" class="text_cray1">µÇÂ¼Ãû£º</td>
 							<td class="text_cray">
-<input type="text" name="loginName" id="textfield22" readonly="readonly" disabled="true"	value="${pageUser.userName}" /></td>
+							<!-- readonly="readonly" disabled="true"	 -->
+<input type="text" name="loginName" id="textfield22" value="${pageUser.userName}" /></td>
 							<td width="239" rowspan="6" align="center"><img
 								src="../images/photo/horse.jpg" width="120" height="120"></td>
 						</tr>
