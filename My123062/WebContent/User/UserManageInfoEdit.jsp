@@ -251,7 +251,6 @@ for(var i=0;i<opArray.length;i++){
 	}
 }
 </script>
-	
 <script type="text/javascript">
 //注册时，验证登录名是否已经存在
  function processRequest(async){
@@ -292,24 +291,14 @@ for(var i=0;i<opArray.length;i++){
 		return flag;
 	}
 }
-
 $(function(){
 	//验证表单中其他内容
 	function validateForm(){
 		  obj=$("form:first")[0];
 		  var flag=true;
-		/* $("span[name=tempTipSpan]").remove();
-		var tipStr="<span style='color: red' name='tempTipSpan'>请按要求填写</span>";
-		var loginNameObj=$("input[name=loginName]");
-		var loginNameVal=loginNameObj.val();
- 		if(/^\w{6,30}$/.test(loginNameVal)==false){
-			loginNameObj.after(tipStr);
-			flag=false;
-		}  */
  		return flag;
 	}	
 	$('#button').click(function(){
-		
 		var flag=false;
 		flag=processRequest(false);
 		if(flag){
@@ -354,7 +343,7 @@ $(function(){
 			var form=document.form1;
 			form.action="<%=request.getContextPath()%>/User/ModifyServlet?action=update";
 			form.method="post";
-			
+			form.target="targetFrame";
 			form.submit();
 			//普通模式上传文件end
 		}

@@ -85,23 +85,15 @@ public class LoginServlet extends HttpServlet {
 			application.setAttribute("app", map);
 			if(null!=((HashMap)application.getAttribute("app"))&&
 					((HashMap)application.getAttribute("app")).containsKey(user.getId())){
-				if(null!=((HttpSession)application.getAttribute(user.getId()+""))){
-					((HttpSession)application.getAttribute(user.getId()+"")).removeAttribute(Constants.userKey);
-				
+				if(null!=(application.getAttribute(user.getId()+""))
+						&&request.getSession(false)!=null ){
+					try {
+						((HttpSession)application.getAttribute(user.getId()+"")).removeAttribute(Constants.userKey);
+					} catch (Exception e) {
+						System.out.println("退出后登陆发生异常！");
+						e.printStackTrace();
+					}
 				}
-				/*response.setContentType("text/html"); 
-				PrintWriter pw=response.getWriter(); 
-				pw.println("<html><body>");
-				pw.println("<script>");
-				pw.println("alert('用户已登录，请重新登录！')");
-				pw.println("window.top.location.href='"+request.getContextPath()+"/Login.jsp'");
-				pw.println("</script>");
-				pw.println("</body></html>");
-				pw.println("请求超时，请重新");
-				pw.flush();
-				pw.close();	
-				return;*/			
-				
 			}else{
 				map.put(user.getId(),ii);
 			}

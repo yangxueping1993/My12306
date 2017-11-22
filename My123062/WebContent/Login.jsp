@@ -81,10 +81,6 @@
 		var pwd=form.pwd.value;
 		var validateCode=form.validateCode.value;
 		var autoLogin=form.autoLogin.checked;
-		console.log("loginName="+loginName);
-		console.log("pwd="+pwd);
-		console.log("validateCode="+validateCode);
-		console.log("autoLogin="+autoLogin);
 		var array=document.getElementsByClassName("tempTip");
 		for(var i=0;i<array.length;i++){
 			array[i].innerText="";

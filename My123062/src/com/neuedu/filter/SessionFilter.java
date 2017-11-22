@@ -61,10 +61,12 @@ public class SessionFilter implements Filter {
 					pw.flush();
 					pw.close();	
 					return;
+				}else{
+					chain.doFilter(request, response);
 				}
+			}else {
 				chain.doFilter(request, response);
 			}
-			chain.doFilter(request, response);
 			
 		}else{
 			String[] pathArray=loginPath.split(";");
