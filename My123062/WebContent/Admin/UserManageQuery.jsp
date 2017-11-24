@@ -92,8 +92,9 @@ if(null!=request.getParameter("action")&&request.getParameter("action").equals("
 				data:$("#form1").serialize(),
 				success:function(resp){
 					//alert("回应="+resp);
-					var jsonArray=JSON.parse(resp.trim());
-					doInnerHTML(jsonArray);
+					/* var jsonArray=JSON.parse(resp.trim()); */
+					
+					doInnerHTML(resp);
 				},
 				error:function(){
 					alert("页面的Ajax请求发生异常，请稍后重试");

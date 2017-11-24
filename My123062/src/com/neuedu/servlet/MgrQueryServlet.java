@@ -105,7 +105,11 @@ public class MgrQueryServlet extends HttpServlet {
 		Gson gson=new Gson();
 		Object[] obj=new Object[]{bean.getPageCnt(),list};
 		String str=gson.toJson(obj);
-		response.setCharacterEncoding("UTF-8");
+		
+		/*设置response.setContentType("application/json");后，
+		 * jsp页面不需要再解析json字符串		 *  var jsonArray=JSON.parse(resp.trim()); */
+		response.setContentType("application/json");
+		/*response.setCharacterEncoding("UTF-8");*/
 		PrintWriter pw=response.getWriter();
       	pw.print(str);
       	pw.flush();
