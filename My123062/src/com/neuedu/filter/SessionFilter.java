@@ -66,6 +66,7 @@ public class SessionFilter implements Filter {
 				}
 			}else {
 				chain.doFilter(request, response);
+				
 			}
 			
 		}else{

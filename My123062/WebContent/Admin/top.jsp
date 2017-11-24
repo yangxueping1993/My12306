@@ -25,7 +25,7 @@
 					class="text_cray1">当前位置: 所有用户管理</span></td>
 				<td width="140" valign="top" bgcolor="#deedf8" class="text_cray1">欢迎您，${userSession.userName }</td>
 				<td width="64" align="left" valign="top" bgcolor="#deedf8">
-				<a href="../Login.jsp" target="_blank" class="cray" onclick="logOut()">退出</a></td>
+				<a href="javascript:void(0)" target="_self" class="cray" onclick="logOut()">退出</a></td>
 			</tr>
 		</table>
 

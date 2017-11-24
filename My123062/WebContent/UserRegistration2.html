@@ -111,6 +111,7 @@ $(function(){
 				$("#peopleTip").text("旅客类型不可为空！");
 				flag=false;
 			}
+			console.log("flag"+flag);
 			if(flag){
 				document.forms[0].action="doRegister?action=register";
 				document.forms[0].method="post";

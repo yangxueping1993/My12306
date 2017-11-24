@@ -91,7 +91,7 @@ public class LoginServlet extends HttpServlet {
 						((HttpSession)application.getAttribute(user.getId()+"")).removeAttribute(Constants.userKey);
 					} catch (Exception e) {
 						System.out.println("退出后登陆发生异常！");
-						e.printStackTrace();
+//						e.printStackTrace();
 					}
 				}
 			}else{

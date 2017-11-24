@@ -100,7 +100,6 @@ $(function(){
 				$("#peopleTip").text("旅客类型不可为空！");
 				flag=false;
 			} */
-			
 			if(flag){
 				$.ajax({
 					url:"doRegister",
@@ -113,7 +112,7 @@ $(function(){
 						}else{
 							/* var loginName=$("#loginName").val(); */
 							console.log(loginName);
-							window.location.href="Login.jsp?loginNameLN="+loginName;
+							window.location.href="Login.jsp?loginNameLN="+loginName; 
 						}
 					},
 					error:function(resp,status,xhr){

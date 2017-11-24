@@ -62,6 +62,7 @@ public class RegisterServlet extends HttpServlet {
 	 * @throws IOException 
 	 */
 	private void doReg(HttpServletRequest req,HttpServletResponse resp) throws IOException{
+		System.out.println("haha");
 		String loginName=StringUtil.parseNull(req.getParameter("loginName"));
 		String pwd=StringUtil.parseNull(req.getParameter("pwd"));
 		pwd=Md5Utils.md5(pwd);
