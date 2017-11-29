@@ -91,7 +91,7 @@ if(null!=request.getParameter("action")&&request.getParameter("action").equals("
 				type:"post",
 				data:$("#form1").serialize(),
 				success:function(resp){
-					//alert("回应="+resp);
+					alert("回应="+resp);
 					/* var jsonArray=JSON.parse(resp.trim()); */
 					
 					doInnerHTML(resp);

@@ -115,14 +115,19 @@ public class LoginServlet extends HttpServlet {
 			cook.setPath(request.getContextPath());
 			response.addCookie(cook);
 			if("1".equals(user.getRule())){
+				/*1绝对路径、response.sendRedirect(request.getContextPath()+"/Admin/Index.html");*/
+				/*重定向是浏览器请求地址*/
+				/*2绝对路径（根目录）、response.sendRedirect("/My123062/Admin/Index.html");*/
+				/*3相对路径（当前目录）、response.sendRedirect("./Admin/Index.html");*/
+				/*4相对路径（父级目录）、response.sendRedirect("../My123062/Admin/Index.html");*/
 				response.sendRedirect(request.getContextPath()+"/Admin/Index.html");
 			}else if("2".equals(user.getRule())){
-				response.sendRedirect(request.getContextPath()+"/User/Index.html");
+//				response.sendRedirect(request.getContextPath()+"/User/Index.html");
+				request.getRequestDispatcher("/User/Index.html").forward(request, response);
 			}
 		}else{
 			//登录失败.
 			request.setAttribute("msg", "登录失败，请输入正确的用户信息！");
-//			response.sendRedirect(request.getContextPath()+"/Login.jsp");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 	}
@@ -143,8 +148,7 @@ public class LoginServlet extends HttpServlet {
 			pw.println("</body><html>");
 			pw.flush();
 			pw.close();
-//			resp.sendRedirect(req.getContextPath()+"/Login.jsp");
-//			req.getRequestDispatcher("/Login.html").forward(req, resp);
+
 		}else{
 			resp.setContentType("text/html");
 			PrintWriter pw=resp.getWriter();

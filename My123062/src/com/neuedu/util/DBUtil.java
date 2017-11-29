@@ -39,7 +39,7 @@ public class DBUtil {
 			Context ctx=new InitialContext();
 			//根据名称搜索对应的服务	
 			//连接服务器的配置123062，连接项目的配置My12306
-			DataSource ds=(DataSource)ctx.lookup("java:comp/env/jdbc/123062");
+			DataSource ds=(DataSource)ctx.lookup("java:comp/env/jdbc/My123062");
 			return ds.getConnection();
 		} catch (Exception e) {
 			//e.printStackTrace();

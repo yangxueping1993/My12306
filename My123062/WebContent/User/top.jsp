@@ -34,8 +34,8 @@ body {
 				<td width="140" valign="top" bgcolor="#deedf8" class="text_cray1">
 				»¶Ó­Äú£¬${sessionScope.userSession.userName}</td>
 				<%-- <%=session.getAttribute(Constants.userKey)==null?"":((User)session.getAttribute(Constants.userKey)).getUserName() %> --%>
-				<td width="64" align="left" valign="top" bgcolor="#deedf8"><a
-					href="#" target="_self" class="cray" onclick="logOut()">ÍË³ö</a></td>
+				<td width="64" align="left" valign="top" bgcolor="#deedf8">
+				<a href="#" target="_self" class="cray" onclick="logOut()">ÍË³ö</a></td>
 			</tr>
 		</table>
 	</form>
